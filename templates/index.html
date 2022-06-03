@@ -1,0 +1,36 @@
+{% extends "Base.html" %}
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <img id="preview" width="250px" height="250px" src="../static/img/noimage.jpg">
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <form action="" method="post" enctype="multipart/form-data" id="uploadform">
+      <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg"required>
+      <button class="btn btn-outline-primary" type="submit" id="upload_button">送信</button>
+    </form>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row justify-content-center">
+    <img id="result_img" width="250px" height="250px" border=”0″>
+    <p id="title"></p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet
+      <img id="result_img" alt="">
+    </a>
+  </div>
+</div>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+{% endblock %}
