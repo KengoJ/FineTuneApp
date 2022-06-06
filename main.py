@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request, redirect, render_template, flash,json
 import numpy as np
 from werkzeug.utils import secure_filename
 import os
-from keras.preprocessing.image import img_to_array, load_img
+from keras.utils import img_to_array, load_img
 from keras.models import load_model
 
 
