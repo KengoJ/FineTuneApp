@@ -50,7 +50,7 @@ def result():
                    'ツキヨタケ']
             
             #判別
-            pred = model.predict(img_nad, batch_size=1, verbose=0, max_queue_size=2)
+            pred = model.predict(img_nad, batch_size=1, verbose=0)
             #判別結果で最も高い数値を抜き出し
             score = np.max(pred)
             #判別結果の配列から最も高いところを抜きだし、そのクラス名をpred_labelへ
