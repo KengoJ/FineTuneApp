@@ -4,7 +4,7 @@ import numpy as np
 from werkzeug.utils import secure_filename
 import os
 from keras.utils import img_to_array, load_img
-from keras.models import load_weights
+from keras.models import load_model
 
 
 UPLOAD_FOLDER = "uploads"
@@ -16,7 +16,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #学習済みモデルの読込
-model=load_weights('./model.h5', compile = False)
+model=load_model('./model.h5', compile = False)
 
 class result_dict:
     results = dict()
