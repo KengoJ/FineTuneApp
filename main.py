@@ -4,7 +4,7 @@ import numpy as np
 from werkzeug.utils import secure_filename
 import os
 from keras.utils import img_to_array, load_img
-from keras.models import load_model
+from keras.models import load_weights
 
 
 UPLOAD_FOLDER = "uploads"
