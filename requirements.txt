@@ -1,4 +1,4 @@
-﻿absl-py==1.1.0
+absl-py==1.1.0
 astunparse==1.6.3
 cachetools==5.2.0
 certifi==2022.5.18.1
@@ -39,7 +39,7 @@ six==1.16.0
 tensorboard==2.9.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
-tensorflow-cpu==2.9.1
+tensorflow==2.9.1
 tensorflow-estimator==2.9.0
 tensorflow-io-gcs-filesystem==0.26.0
 termcolor==1.1.0
