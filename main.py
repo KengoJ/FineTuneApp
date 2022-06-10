@@ -3,12 +3,11 @@ from flask import Flask, jsonify, request, redirect, render_template, flash,json
 import numpy as np
 from werkzeug.utils import secure_filename
 import os
-#from keras.utils import img_to_array, load_img
-#from keras.models import load_model
+from keras.preprocessing.image import img_to_array, load_img
 import numpy as np
 import tensorflow as tf
-from keras.applications.inception_v3 import preprocess_input
-from keras.preprocessing.image import array_to_img, img_to_array, load_img
+from keras.applications.vgg16 import preprocess_input
+
 
 
 UPLOAD_FOLDER = "uploads"
@@ -19,8 +18,11 @@ app.config["JSON_AS_ASCII"] = False
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-#学習済みモデルの読込
-#model=load_model('./model.h5', compile = False)
+
+# TFliteモデルのロード
+interpreter = tf.lite.Interpreter(model_path = "converted_model.tflite")
+interpreter.allocate_tensors()
+
 
 class result_dict:
     results = dict()
@@ -37,12 +39,6 @@ def result():
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             img_path = os.path.join(UPLOAD_FOLDER, filename)
-            """
-            img = img_to_array(load_img(img_path, target_size=(224,224)))
-            #0-1に変換
-            img_nad = img_to_array(img)/255
-            #4次元配列に
-            img_nad = img_nad[None, ...]
             #表示したいクラス名
             label=['ドクツルタケ',
                    'ホンシメジ',
@@ -52,30 +48,9 @@ def result():
                    'スギヒラタケ',
                    'シイタケ',
                    'ツキヨタケ']
-            
-            #判別
-            pred = model.predict(img_nad, batch_size=1, verbose=0)
-            #判別結果で最も高い数値を抜き出し
-            score = np.max(pred)
-            #判別結果の配列から最も高いところを抜きだし、そのクラス名をpred_labelへ
-            pred_label = label[np.argmax(pred[0])]
-            #表示
-            print('name:',pred_label)
-            print('score:',score)
-            print(filename)
-            answer = pred_label
-            result_dict.results.setdefault(filename,answer)
-            print(result_dict.results)
-            """
-
-            
             # 画像のロード & 正規化
             img = img_to_array(load_img(img_path, target_size=(224, 224)))
             input_img = preprocess_input(img)
-
-            # TFliteモデルのロード
-            interpreter = tf.lite.Interpreter(model_path = "converted_model.tflite")
-            interpreter.allocate_tensors()
 
             # モデルの入出力情報の取得
             input_details = interpreter.get_input_details()
@@ -87,12 +62,13 @@ def result():
             # 予測
             interpreter.set_tensor(input_details[0]['index'], input_data)
             interpreter.invoke()
-            output_data = interpreter.get_tensor(output_details[0]['index'])
-
 
             # 予測結果の出力
-            print(output_data.argmax(axis = 1))
-        return jsonify(output_data)
+            output_data = interpreter.get_tensor(output_details[0]['index'])
+            predict = np.argmax(output_data)
+            name = label[int(predict)]
+        
+        return jsonify(name)
     
  
 @app.route('/results',methods=['GET', 'POST'])
