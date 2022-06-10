@@ -3,12 +3,12 @@ from flask import Flask, jsonify, request, redirect, render_template, flash,json
 import numpy as np
 from werkzeug.utils import secure_filename
 import os
-#from keras.utils import img_to_array, load_img
+from keras.utils import img_to_array, load_img
 #from keras.models import load_model
 import numpy as np
 import tensorflow as tf
-from keras.applications.inception_v3 import preprocess_input
-from keras.preprocessing.image import array_to_img, img_to_array, load_img
+#from keras.applications.inception_v3 import preprocess_input
+#from keras.preprocessing.image import array_to_img, img_to_array, load_img
 
 
 UPLOAD_FOLDER = "uploads"
