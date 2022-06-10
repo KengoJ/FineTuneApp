@@ -7,7 +7,7 @@ from keras.utils import img_to_array, load_img
 #from keras.models import load_model
 import numpy as np
 import tensorflow as tf
-#from keras.applications.inception_v3 import preprocess_input
+from keras.applications.inception_v3 import preprocess_input
 #from keras.preprocessing.image import array_to_img, img_to_array, load_img
 
 
