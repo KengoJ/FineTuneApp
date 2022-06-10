@@ -3,8 +3,12 @@ from flask import Flask, jsonify, request, redirect, render_template, flash,json
 import numpy as np
 from werkzeug.utils import secure_filename
 import os
-from keras.utils import img_to_array, load_img
-from keras.models import load_model
+#from keras.utils import img_to_array, load_img
+#from keras.models import load_model
+import numpy as np
+import tensorflow as tf
+from keras.applications.inception_v3 import preprocess_input
+from keras.preprocessing.image import array_to_img, img_to_array, load_img
 
 
 UPLOAD_FOLDER = "uploads"
@@ -16,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #学習済みモデルの読込
-model=load_model('./model.h5', compile = False)
+#model=load_model('./model.h5', compile = False)
 
 class result_dict:
     results = dict()
@@ -33,7 +37,7 @@ def result():
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             img_path = os.path.join(UPLOAD_FOLDER, filename)
-            
+            """
             img = img_to_array(load_img(img_path, target_size=(224,224)))
             #0-1に変換
             img_nad = img_to_array(img)/255
@@ -62,7 +66,33 @@ def result():
             answer = pred_label
             result_dict.results.setdefault(filename,answer)
             print(result_dict.results)
-        return jsonify(answer)
+            """
+
+            
+            # 画像のロード & 正規化
+            img = img_to_array(load_img(img_path, target_size=(224, 224)))
+            input_img = preprocess_input(img)
+
+            # TFliteモデルのロード
+            interpreter = tf.lite.Interpreter(model_path = "converted_model.tflite")
+            interpreter.allocate_tensors()
+
+            # モデルの入出力情報の取得
+            input_details = interpreter.get_input_details()
+            output_details = interpreter.get_output_details()
+
+            # 入力画像のshapeを整形
+            input_data = np.expand_dims(input_img, axis = 0)
+
+            # 予測
+            interpreter.set_tensor(input_details[0]['index'], input_data)
+            interpreter.invoke()
+            output_data = interpreter.get_tensor(output_details[0]['index'])
+
+
+            # 予測結果の出力
+            print(output_data.argmax(axis = 1))
+        return jsonify(output_data)
     
  
 @app.route('/results',methods=['GET', 'POST'])
