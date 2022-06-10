@@ -3,12 +3,10 @@ from flask import Flask, jsonify, request, redirect, render_template, flash,json
 import numpy as np
 from werkzeug.utils import secure_filename
 import os
-from keras.utils import img_to_array, load_img
-#from keras.models import load_model
 import numpy as np
 import tensorflow as tf
-from keras.applications.inception_v3 import preprocess_input
-#from keras.preprocessing.image import array_to_img, img_to_array, load_img
+from keras.applications.vgg16 import preprocess_input
+from keras.preprocessing.image import array_to_img, img_to_array, load_img
 
 
 UPLOAD_FOLDER = "uploads"
@@ -19,8 +17,9 @@ app.config["JSON_AS_ASCII"] = False
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-#学習済みモデルの読込
-#model=load_model('./model.h5', compile = False)
+# TFliteモデルのロード
+interpreter = tf.lite.Interpreter(model_path = "converted_model.tflite")
+interpreter.allocate_tensors()
 
 class result_dict:
     results = dict()
@@ -67,15 +66,20 @@ def result():
             result_dict.results.setdefault(filename,answer)
             print(result_dict.results)
             """
-
-            
+          #表示したいクラス名
+            label=['ドクツルタケ',
+                   'ホンシメジ',
+                   'ヒラタケ',
+                   'ムキタケ',
+                   'ニセクロハツ',
+                   'スギヒラタケ',
+                   'シイタケ',
+                   'ツキヨタケ']
             # 画像のロード & 正規化
             img = img_to_array(load_img(img_path, target_size=(224, 224)))
             input_img = preprocess_input(img)
 
-            # TFliteモデルのロード
-            interpreter = tf.lite.Interpreter(model_path = "converted_model.tflite")
-            interpreter.allocate_tensors()
+            
 
             # モデルの入出力情報の取得
             input_details = interpreter.get_input_details()
@@ -88,12 +92,11 @@ def result():
             interpreter.set_tensor(input_details[0]['index'], input_data)
             interpreter.invoke()
             output_data = interpreter.get_tensor(output_details[0]['index'])
-
-
+            predict = np.argmax(output_data)
+            name = label[int(predict)]
             # 予測結果の出力
-            print(output_data.argmax(axis = 1))
-        return jsonify(output_data)
-    
+            
+        return jsonify(name)
  
 @app.route('/results',methods=['GET', 'POST'])
 def ajaxtest():
