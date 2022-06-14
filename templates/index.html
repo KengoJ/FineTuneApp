@@ -1,36 +1,92 @@
 {% extends "Base.html" %}
 {% block content %}
 
-<div class="container">
-  <div class="row justify-content-center">
-    <img id="preview" width="250px" height="250px" src="../static/img/noimage.jpg">
+<main>
+  <ul id="page-link">
+    <li><a href="#area-1">概要</a></li>
+    <li><a href="#area-2">使い方</a></li>
+    <li><a href="#area-3">アップロード</a></li>
+  </ul>
+<div class="area" id="area-1">
+<div class="row justify-content-center">
+  <div class="card" style="width: 32rem;">
+    
+    <div class="card-body">
+      <h5 class="card-title text-center">概要</h5>
+      <p class="card-text text-center">アップロードされた画像から8種類のきのこを判別します。
+        <br>
+        <br>8種類の内訳<br>
+        'ドクツルタケ',
+        'ホンシメジ',
+        'ヒラタケ',
+        'ムキタケ',
+        'ニセクロハツ',
+        'スギヒラタケ',
+        'シイタケ',
+        'ツキヨタケ'
+      </p>
+    </div>
   </div>
 </div>
-
-<div class="container">
-  <div class="row justify-content-center">
-    <form action="" method="post" enctype="multipart/form-data" id="uploadform">
-      <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg"required>
-      <button class="btn btn-outline-primary" type="submit" id="upload_button">送信</button>
-    </form>
-  </div>
 </div>
 <br>
-<div class="container">
-  <div class="row justify-content-center">
-    <img id="result_img" width="250px" height="250px" border=”0″>
-    <p id="title"></p>
+<br>
+<br>
+<br>
+<div class="area" id="area-2">
+<div class="row justify-content-center">
+  <div class="card" style="width: 32rem;">
+    
+    <div class="card-body">
+      <h5 class="card-title">使い方</h5>
+      <p class="card-text">
+        ページ下部のフォームから画像をアップロードしてください。<br>
+        判別結果が返されます。
+    </div>
   </div>
 </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="area" id="area-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <img id="preview" width="500px" height="500px" src="../static/img/noimage.jpg">
+    </div>
+  </div>
 
+  <div class="container">
+    <div class="row justify-content-center">
+      <form action="" method="post" enctype="multipart/form-data" id="uploadform">
+        <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg"required>
+        <button class="btn btn-outline-primary" type="submit" id="upload_button">送信</button>
+      </form>
+    </div>
+  </div>
+  <br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <img id="result_img">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <p id="title"></p>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row justify-content-center">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">
+    Tweet
       <img id="result_img" alt="">
     </a>
   </div>
 </div>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+</main>
 
 {% endblock %}

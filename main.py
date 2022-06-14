@@ -65,10 +65,10 @@ def result():
 
             # 予測結果の出力
             output_data = interpreter.get_tensor(output_details[0]['index'])
-            predict = np.argmax(output_data)
-            name = label[int(predict)]
-        
-        return jsonify(name)
+            predict = int(np.argmax(output_data))
+            name = label[predict]
+            print(name,predict)
+        return jsonify(name,predict)
     
  
 @app.route('/results',methods=['GET', 'POST'])

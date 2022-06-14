@@ -1,4 +1,22 @@
-
-img {
-    border-style: none;
-}
+#page-link{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  #page-link li{
+    list-style: none;
+  }
+  
+  #page-link li a{
+    color: #333;
+    padding:0 20px;
+    text-decoration: none;
+  }
+  
+  #page-link li a::before{
+    content:'▼';
+    font-size:0.8rem;
+    padding:0 10px 0 0;
+    color: #ccc;
+  }
