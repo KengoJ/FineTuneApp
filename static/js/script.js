@@ -40,13 +40,13 @@ $(function(){
         // 有毒の場合
         if([0,4,5,7].includes(res[1])){
             document.getElementById("result_img").src = "../static/img/"+res[1]+".png";
-            document.getElementById("title").innerHTML = "これは<br>"+res[0]+"<br>であると判断されました。<br>有毒である可能性があります。<br>取り扱いには注意しましょう。";
+            document.getElementById("title").innerHTML = "<br>これは<br><br>"+res[0]+"<br><br>であると判断されました。<br>有毒である可能性があります。<br>取り扱いには注意しましょう。";
             $("#result_img").css("width", "500px");
             $("#result_img").css("height", "500px");
         }
         else {
             document.getElementById("result_img").src = "../static/img/"+res[1]+".png";
-            document.getElementById("title").innerHTML = "<center>これは<br>"+res[0]+"<br>であると判断されました</center>";
+            document.getElementById("title").innerHTML = "<br>これは<br><br>"+res[0]+"<br><br>であると判断されました";
             $("#result_img").css("width", "500px");
             $("#result_img").css("height", "500px");
         }

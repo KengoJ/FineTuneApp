@@ -8,48 +8,61 @@
     <li><a href="#area-3">アップロード</a></li>
   </ul>
 <div class="area" id="area-1">
-<div class="row justify-content-center">
-  <div class="card" style="width: 32rem;">
-    
-    <div class="card-body">
-      <h5 class="card-title text-center">概要</h5>
-      <p class="card-text text-center">アップロードされた画像から8種類のきのこを判別します。
-        <br>
-        <br>8種類の内訳<br>
-        'ドクツルタケ',
-        'ホンシメジ',
-        'ヒラタケ',
-        'ムキタケ',
-        'ニセクロハツ',
-        'スギヒラタケ',
-        'シイタケ',
-        'ツキヨタケ'
-      </p>
+  <div class="row justify-content-center">
+    <div class="card" style="width: 32rem;">
+      <div class="card-body">
+        <h5 class="card-title text-center">概要</h5>
+        <p class="card-text text-center">アップロードされた画像から8種類のきのこを判別します。
+        <br>8種のうち4種類は、食用と間違われやすい毒キノコが入っています。見つけた場合は取扱に注意しましょう。
+        </p>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="row justify-content-center">
+      <div class="card" style="width: 48rem;">
+        <div class="card-body">
+          <h5 class="card-title text-center">8種類の内訳</h5>
+        </div>
+
+    <br>
+    <div class="row justify-content-center"> 
+      {% for i in range(4) %}
+      <div class="card" style="width: 12rem;">
+        <img src="../static/img/{{i}}.png" class="card-img-top" height="150px" width="100px">
+        <div class="card-body">
+        <p class="card text-center">{{label[i]}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <br>
+    <div class="row justify-content-center">
+      {% for i in range(4,8) %}
+      <div class="card" style="width: 12rem;">
+        <img src="../static/img/{{i}}.png" class="card-img-top" height="150px" width="100px">
+        <div class="card-body">
+        <p class="card text-center">{{label[i]}}</p>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
 </div>
-</div>
-<br>
-<br>
-<br>
-<br>
+<br><br><br>
 <div class="area" id="area-2">
 <div class="row justify-content-center">
   <div class="card" style="width: 32rem;">
-    
     <div class="card-body">
-      <h5 class="card-title">使い方</h5>
-      <p class="card-text">
+      <h5 class="card-title text-center">使い方</h5>
+      <p class="card-text text-center">
         ページ下部のフォームから画像をアップロードしてください。<br>
         判別結果が返されます。
     </div>
   </div>
 </div>
 </div>
-<br>
-<br>
-<br>
-<br>
+<br><br><br>
 <div class="area" id="area-3">
   <div class="container">
     <div class="row justify-content-center">
@@ -74,7 +87,7 @@
 
   <div class="container">
     <div class="row justify-content-center">
-      <p id="title"></p>
+      <p id="title" class="text-center"></p>
     </div>
   </div>
 </div>
